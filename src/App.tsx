@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TodoForm from "./components/TodoForm";
 import type { Todo } from "./types/Todo";
 import "./App.css";
 
@@ -8,11 +9,23 @@ function App() {
     { id: 2, text: "Build a Task Manager", completed: true },
   ]);
 
+  const addTodo = (text: string) => {
+    const newTodo: Todo = {
+      id: Date.now(),
+      text,
+      completed: false,
+    };
+
+    setTodos([newTodo, ...todos]);
+  };
+
   return (
     <div className="app">
       <div className="todo-card">
         <h1>Task Manager</h1>
         <p className="subtitle">Organize your day, one task at a time.</p>
+
+        <TodoForm onAddTodo={addTodo} />
 
         <ul>
           {todos.map((todo) => (

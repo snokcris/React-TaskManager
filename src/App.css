@@ -23,3 +23,34 @@ h1 {
   margin: 0 0 24px;
   color: #6b7280;
 }
+
+.todo-form {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.todo-form input {
+  flex: 1;
+  padding: 14px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 12px;
+  outline: none;
+}
+
+.todo-form input:focus {
+  border-color: #6366f1;
+}
+
+.todo-form button {
+  border: none;
+  background: #4f46e5;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.todo-form button:hover {
+  background: #4338ca;
+}
