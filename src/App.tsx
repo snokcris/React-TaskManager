@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TodoForm from "./components/TodoForm";
+import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo";
 import "./App.css";
 
@@ -19,6 +20,18 @@ function App() {
     setTodos([newTodo, ...todos]);
   };
 
+  const deleteTodo = (id: number) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const toggleTodo = (id: number) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
+    );
+  };
+
   return (
     <div className="app">
       <div className="todo-card">
@@ -27,13 +40,11 @@ function App() {
 
         <TodoForm onAddTodo={addTodo} />
 
-        <ul>
-          {todos.map((todo) => (
-            <li key={todo.id}>
-              {todo.text} - {todo.completed ? "Done" : "Pending"}
-            </li>
-          ))}
-        </ul>
+        <TodoList
+          todos={todos}
+          onDeleteTodo={deleteTodo}
+          onToggleTodo={toggleTodo}
+        />
       </div>
     </div>
   );
