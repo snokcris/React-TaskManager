@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Summary from "./components/Summary";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo";
@@ -32,6 +33,10 @@ function App() {
     );
   };
 
+  const total = todos.length;
+  const pending = todos.filter((todo) => !todo.completed).length;
+  const completed = todos.filter((todo) => todo.completed).length;
+
   return (
     <div className="app">
       <div className="todo-card">
@@ -39,6 +44,7 @@ function App() {
         <p className="subtitle">Organize your day, one task at a time.</p>
 
         <TodoForm onAddTodo={addTodo} />
+        <Summary total={total} pending={pending} completed={completed} />
 
         <TodoList
           todos={todos}
