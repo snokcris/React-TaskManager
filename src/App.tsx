@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterBar from "./components/FilterBar";
 import Summary from "./components/Summary";
 import TodoForm from "./components/TodoForm";
@@ -9,12 +9,24 @@ import "./App.css";
 type FilterType = "all" | "pending" | "completed";
 
 function App() {
-  const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, text: "Learn React basics", completed: false },
-    { id: 2, text: "Build a Task Manager", completed: true },
-  ]);
+  const [todos, setTodos] = useState<Todo[]>(() => {
+    const savedTodos = localStorage.getItem("todos");
+
+    if (savedTodos) {
+      return JSON.parse(savedTodos) as Todo[];
+    }
+
+    return [
+      { id: 1, text: "Learn React basics", completed: false },
+      { id: 2, text: "Build a Task Manager", completed: true },
+    ];
+  });
 
   const [filter, setFilter] = useState<FilterType>("all");
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const addTodo = (text: string) => {
     const newTodo: Todo = {
