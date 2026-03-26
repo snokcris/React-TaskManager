@@ -116,3 +116,23 @@ h1 {
   border-radius: 999px;
   font-size: 0.95rem;
 }
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-bar button {
+  border: 1px solid #d1d5db;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.filter-bar button.active {
+  background: #111827;
+  color: white;
+  border-color: #111827;
+}

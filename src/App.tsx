@@ -1,15 +1,20 @@
 import { useState } from "react";
+import FilterBar from "./components/FilterBar";
 import Summary from "./components/Summary";
 import TodoForm from "./components/TodoForm";
 import TodoList from "./components/TodoList";
 import type { Todo } from "./types/Todo";
 import "./App.css";
 
+type FilterType = "all" | "pending" | "completed";
+
 function App() {
   const [todos, setTodos] = useState<Todo[]>([
     { id: 1, text: "Learn React basics", completed: false },
     { id: 2, text: "Build a Task Manager", completed: true },
   ]);
+
+  const [filter, setFilter] = useState<FilterType>("all");
 
   const addTodo = (text: string) => {
     const newTodo: Todo = {
@@ -33,6 +38,12 @@ function App() {
     );
   };
 
+  const filteredTodos = todos.filter((todo) => {
+    if (filter === "pending") return !todo.completed;
+    if (filter === "completed") return todo.completed;
+    return true;
+  });
+
   const total = todos.length;
   const pending = todos.filter((todo) => !todo.completed).length;
   const completed = todos.filter((todo) => todo.completed).length;
@@ -45,9 +56,10 @@ function App() {
 
         <TodoForm onAddTodo={addTodo} />
         <Summary total={total} pending={pending} completed={completed} />
+        <FilterBar currentFilter={filter} onChangeFilter={setFilter} />
 
         <TodoList
-          todos={todos}
+          todos={filteredTodos}
           onDeleteTodo={deleteTodo}
           onToggleTodo={toggleTodo}
         />
